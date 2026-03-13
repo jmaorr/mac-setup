@@ -2,9 +2,9 @@
 set -euo pipefail
 
 # Mac Setup Bootstrap Script
-# Usage: curl -fsSL <raw-url>/install.sh | bash
+# Usage: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jmaorr/mac-setup/main/install.sh)"
 
-REPO="jmaorr/mac-setup"
+REPO="https://github.com/jmaorr/mac-setup.git"
 INSTALL_DIR="$HOME/mac-setup"
 
 echo "=============================="
@@ -21,34 +21,22 @@ if ! xcode-select -p &>/dev/null; then
   read -n 1 -s
 fi
 
-# 2. Install Homebrew (needed for gh)
+# 2. Install Homebrew
 if ! command -v brew &>/dev/null; then
   echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# 3. Install gh CLI for private repo access
-if ! command -v gh &>/dev/null; then
-  echo "Installing GitHub CLI..."
-  brew install gh
-fi
-
-# 4. Authenticate with GitHub if needed
-if ! gh auth status &>/dev/null 2>&1; then
-  echo "Please authenticate with GitHub to access the private repo..."
-  gh auth login
-fi
-
-# 5. Clone the repo
+# 3. Clone the repo
 if [[ -d "$INSTALL_DIR" ]]; then
   echo "Repo already cloned at $INSTALL_DIR, pulling latest..."
   cd "$INSTALL_DIR" && git pull
 else
   echo "Cloning mac-setup repo..."
-  gh repo clone "$REPO" "$INSTALL_DIR"
+  git clone "$REPO" "$INSTALL_DIR"
 fi
 
-# 6. Run setup
+# 4. Run setup
 cd "$INSTALL_DIR"
 bash setup.sh

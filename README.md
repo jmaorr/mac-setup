@@ -10,12 +10,7 @@ On a brand new Mac, open Terminal and run:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jmaorr/mac-setup/main/install.sh)"
 ```
 
-This will:
-1. Install Xcode Command Line Tools
-2. Install Homebrew
-3. Authenticate with GitHub (for private repo access)
-4. Clone this repo
-5. Run all setup scripts
+This will install Xcode CLT, Homebrew, clone this repo, and run all setup scripts.
 
 ## What Gets Installed
 
